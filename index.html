@@ -9,7 +9,7 @@
   <script src="angular-messages.min.js"></script>
 	<style type="text/css">
 		.jumbotron {
-			width: 400px;
+			width: 600px;
 			text-align: center;
 			margin-left: auto;
 			margin-right: auto;
@@ -25,22 +25,25 @@
 
 	<h3>{{app}}</h3>
 
+<input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que voce esta buscando"/>
 	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th></th>
-				<th>Nome</th>
-				<th>Telefone</th>
+				<th><a href="" ng-click="ordenarPor('nome')">Nome</a></th>
+				<th><a href="" ng-click="ordenarPor('telefone')">Telefone</a></th>
 				<th>Operadora</th>
+				<th>Data</th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-class="{danger: contato.selecionado}" ng-repeat="contato in contatos">
+			<tr ng-class="{danger: contato.selecionado}" ng-repeat="contato in contatos | filter:{nome:criterioDeBusca} | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao">
 				<td><input type="checkbox" ng-model="contato.selecionado"></td>
-				<td>{{contato.nome}}</td>
+				<td>{{contato.nome | uppercase}}</td>
 				<td>{{contato.telefone}}</td>
-				<td>{{contato.operadora.nome}}</td>
+				<td>{{contato.operadora.nome | lowercase}}</td>
+				<td>{{contato.data | date:'dd/MM/yyyy HH:mm'}}</td>
 				<td><div style="width:20px; height:20px;" ng-style="{'background-color': contato.cor}"></div></td>
 			</tr>
 		</tbody>
@@ -77,9 +80,9 @@
 	angular.module('listaTelefonica').controller('CrtlApp', function($scope) {
 		$scope.app = "Lista telefonica";
 		$scope.contatos = [
-			{nome: "Cloves Junior", telefone: '3972-0210', cor: 'black'},
-			{nome: "Maria Jose", telefone: '3974-1240', cor:'white'},
-			{nome: "Anatalino rosa", telefone: '3974-1969', cor:'red'}
+			{nome: "Cloves Junior", data: new Date(), telefone: '3972-0210', cor: 'black'},
+			{nome: "Maria Jose", data: new Date() ,telefone: '3974-1240', cor:'white'},
+			{nome: "Anatalino rosa", data: new Date() ,telefone: '3974-1969', cor:'red'}
 		];
 		$scope.operadoras = [
 			{nome:"Vivo", codigo: "15", categoria:"Celular"},
@@ -105,6 +108,10 @@
 			return contatos.some(function(contato) {
 				return contato.selecionado;
 			});
+		}
+		$scope.ordenarPor = function(campo){
+			 $scope.criterioDeOrdenacao = campo;
+			 $scope.direcaoDaOrdenacao = !$scope.direcaoDaOrdenacao;
 		}
 	});
 </script>
