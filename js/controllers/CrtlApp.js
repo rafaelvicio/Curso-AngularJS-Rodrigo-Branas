@@ -1,13 +1,10 @@
-angular.module('listaTelefonica').controller('CrtlApp', function($scope, $http) {
+angular.module('listaTelefonica').controller('CrtlApp', function($scope, $contatosAPI, $operadorasAPI) {
   $scope.app = "Lista telefonica";
   $scope.contatos = [];
   $scope.operadoras = [];
 
   var carregarContatos = function() {
-    $http({
-      method: 'GET',
-      url: 'localhost:3000/api/contatos'
-   }).then(function (data){
+    contatosAPI.getContatos().then(function (data){
      $scope.contatos = data;
    },function (error){
      $scope.mensagem = "Aconteceu algum problema" +  error;
@@ -15,10 +12,7 @@ angular.module('listaTelefonica').controller('CrtlApp', function($scope, $http) 
  };
 
  var carregarOperadoras = function(data) {
-   $http({
-     method: 'GET',
-     url: 'localhost:3000/api/operadoras'
-  }).then(function (data){
+   operadorasAPI.getOperadoras().then(function (data){
     $scope.operadoras = data;
   },function (error){
     $scope.mensagem = "Aconteceu algum problema" +  data;
@@ -26,8 +20,9 @@ angular.module('listaTelefonica').controller('CrtlApp', function($scope, $http) 
 };
 
   $scope.adicionarContato = function(contato) {
-    $http.post("localhost:3000/contatos", contato)
-      .sucess(function(data){
+      contato.serial = "";
+      contato.data = new Date();
+      contatosAPI.saveContato().sucess(function(data){
         delete $scope.	contato;
         $scope.contatoForm.$setPristine();
         carregarContatos();
