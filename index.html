@@ -12,6 +12,9 @@
 	<script src="js/app.js"></script>
 	<script src="js/controllers/CrtlApp.js"></script>
 	<script src="js/services/contatosAPIService.js"></script>
+	<script src="js/services/operadorasAPIService.js"></script>
+	<script src="js/filters/nameFilter.js"></script>
+	<script src="js/filters/elipsisFilter.js"></script>
 </head>
 <body ng-controller="CrtlApp">
 <div class="jumbotron">
@@ -36,7 +39,7 @@
 			<tr ng-class="{danger: contato.selecionado}" ng-repeat="contato in contatos | filter:{nome:criterioDeBusca} | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao">
 				<td><input type="checkbox" ng-model="contato.selecionado"></td>
 				<td>{{contato.serial}}</td>
-				<td>{{contato.nome | uppercase}}</td>
+				<td>{{contato.nome | name | elipsis:10 }}</td>
 				<td>{{contato.telefone}}</td>
 				<td>{{contato.operadora.nome | lowercase}}</td>
 				<td>{{contato.data | date:'dd/MM/yyyy HH:mm'}}</td>
