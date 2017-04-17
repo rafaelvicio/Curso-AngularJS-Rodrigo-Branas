@@ -4,21 +4,13 @@
 	<meta charset="UTf-8">
 	<title>Lista Telefonuca</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 	<script src="angular.min.js"></script>
   <script src="angular-messages.min.js"></script>
-	<style type="text/css">
-		.jumbotron {
-			width: 600px;
-			text-align: center;
-			margin-left: auto;
-			margin-right: auto;
-			margin-top: 20px;
-		}
-		.form-control{
-			margin-bottom: 5px;
-		}
-	</style>
+
+	<script src="js/app.js"></script>
+	<script src="js/controllers/CrtlApp.js"></script>
 </head>
 <body ng-controller="CrtlApp">
 <div class="jumbotron">
@@ -77,59 +69,8 @@
 	<button class="btn btn-danger btn-block" ng-click="removerContato(contatos)" ng-if="isChecado(contatos)">Remover</button>
 </div>
 <script type="text/javascript">
-	angular.module('listaTelefonica', ["ngMessages"]);
-	angular.module('listaTelefonica').controller('CrtlApp', function($scope, $http) {
-		$scope.app = "Lista telefonica";
-		$scope.contatos = [];
-		$scope.operadoras = [];
 
-		var carregarContatos = function() {
-			$http.get("localhost:3000/api/contatos")
-				.sucess(function(data, status){
-					$scope.contatos = data;
-				})
-				.error(function(data, status){
-					$scope.mensagem = "Aconteceu algum problema" +  data;
-				});
-		};
 
-		var carregarOperadoras = function() {
-			$http.get("localhost:3000")
-				.sucess(funnction(data, status){
-					$scope.operadoras = data;
-				})
-		}
-
-		$scope.adicionarContato = function(contato) {
-			$http.post("localhost:3000/contatos", contato)
-				.sucess(function(data,){
-					delete $scope.	contato;
-		      $scope.contatoForm.$setPristine();
-					carregarContatos();
-				});
-
-		}
-		$scope.removerContato = function(contatos) {
-			$scope.contatos = contatos.filter(function(contato) {
-				if(!contato.selecionado) {
-					return contato;
-				}
-			});
-		}
-		$scope.isChecado = function(contatos) {
-			return contatos.some(function(contato) {
-				return contato.selecionado;
-			});
-		}
-		$scope.ordenarPor = function(campo){
-			 $scope.criterioDeOrdenacao = campo;
-			 $scope.direcaoDaOrdenacao = !$scope.direcaoDaOrdenacao;
-		}
-
-		carregarContatos();
-		carregarOperadoras();
-
-	});
 </script>
 </body>
 </html>
