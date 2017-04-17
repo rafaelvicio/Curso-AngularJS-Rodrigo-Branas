@@ -5,6 +5,7 @@
 	<title>Lista Telefonuca</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/ui-style.css">
 
 	<script src="angular.min.js"></script>
   <script src="angular-messages.min.js"></script>
@@ -15,12 +16,16 @@
 	<script src="js/services/operadorasAPIService.js"></script>
 	<script src="js/filters/nameFilter.js"></script>
 	<script src="js/filters/elipsisFilter.js"></script>
+	<script src="js/directive/uiAlertDirective.js"></script>
 </head>
 <body ng-controller="CrtlApp">
 <div class="jumbotron">
 
+	<div ui-alert></div>
+
 	<h3>{{app}}</h3>
-	{{mensagem}}
+
+
 
 <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que voce esta buscando"/>
 	<table class="table table-striped">

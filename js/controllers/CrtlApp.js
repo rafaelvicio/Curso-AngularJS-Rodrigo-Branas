@@ -1,4 +1,4 @@
-angular.module('listaTelefonica').controller('CrtlApp', function($scope, $contatosAPI, $operadorasAPI) {
+angular.module('listaTelefonica').controller('CrtlApp', function($scope, contatosAPI, operadorasAPI) {
   $scope.app = "Lista telefonica";
   $scope.contatos = [];
   $scope.operadoras = [];
